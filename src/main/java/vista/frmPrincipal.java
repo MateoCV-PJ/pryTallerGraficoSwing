@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class frmPrincipal extends JFrame {
     private JMenuBar menuBar;
-    private JMenu menuUsuario, menuCliente, menuSalir;
+    public JMenu menuUsuario, menuCliente, menuSalir;
 
     public frmPrincipal() {
 
