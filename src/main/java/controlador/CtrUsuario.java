@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -131,13 +132,23 @@ public class CtrUsuario implements ActionListener{
     }
 
     private void guardarUsuario() {
+        String clave = new String(vista.txtClave.getPassword());
+
+        if (vista.txtIdUsuario.getText().trim().isEmpty() ||
+                vista.txtNombre.getText().trim().isEmpty() ||
+                vista.txtApellido.getText().trim().isEmpty() ||
+                clave.trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(vista, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         List<ModUsuario> listaUsuarios = leerListaUsuarios();
         ModUsuario usuario = new ModUsuario();
 
         usuario.setIdUsuario(vista.txtIdUsuario.getText());
         usuario.setNombre(vista.txtNombre.getText());
         usuario.setApellido(vista.txtApellido.getText());
-        usuario.setClave(new String(vista.txtClave.getPassword()));
+        usuario.setClave(clave);
 
         listaUsuarios.add(usuario);
         guardarListaUsuarios(listaUsuarios);

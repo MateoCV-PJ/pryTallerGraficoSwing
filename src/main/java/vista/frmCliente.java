@@ -30,6 +30,9 @@ public class frmCliente extends JFrame {
         menuOpciones.add(mniModificar);
         menuOpciones.add(mniEliminar);
 
+        menuBar.add(menuOpciones);
+        setJMenuBar(menuBar);
+
         lblId = new JLabel("ID Cliente:");
         lblId.setBounds(20, 20, 100, 25);
         add(lblId);

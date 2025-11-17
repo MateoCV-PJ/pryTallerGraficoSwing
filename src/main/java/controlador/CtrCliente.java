@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -146,6 +147,14 @@ public class CtrCliente implements ActionListener{
     }
 
     private void guardarCliente() {
+        if (vista.txtIdCliente.getText().trim().isEmpty() ||
+                vista.txtNombre.getText().trim().isEmpty() ||
+                vista.txtApellido.getText().trim().isEmpty() ||
+                vista.txtEmail.getText().trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(vista, "Por favor, complete todos los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         List<ModCliente> listaClientes = leerListaClientes();
         ModCliente cliente = new ModCliente();
 
@@ -153,8 +162,11 @@ public class CtrCliente implements ActionListener{
         cliente.setNombre(vista.txtNombre.getText());
         cliente.setApellido(vista.txtApellido.getText());
         cliente.setEmail(vista.txtEmail.getText());
+
         if (vista.cmbGenero.getSelectedItem() != null) {
             cliente.setGenero(vista.cmbGenero.getSelectedItem().toString());
+        } else {
+            cliente.setGenero("Sin especificar");
         }
 
         listaClientes.add(cliente);
