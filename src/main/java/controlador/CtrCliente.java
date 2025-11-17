@@ -17,35 +17,99 @@ import java.util.List;
 public class CtrCliente implements ActionListener{
     private frmCliente vista;
     private final String ARCHIVO = "clientes.json";
+    private String accionActual = "NINGUNA";
 
     public CtrCliente(frmCliente vista) {
         this.vista = vista;
 
-        this.vista.btnGuardar.addActionListener(this);
-        this.vista.btnModificar.addActionListener(this);
-        this.vista.btnEliminar.addActionListener(this);
+        this.vista.mniGuardar.addActionListener(this);
+        this.vista.mniModificar.addActionListener(this);
+        this.vista.mniEliminar.addActionListener(this);
+
+        this.vista.btnAccion.addActionListener(this);
         this.vista.btnLimpiar.addActionListener(this);
 
+        prepararVistaGuardar();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == vista.btnGuardar) {
-            guardarCliente();
+        if (e.getSource() == vista.mniGuardar) {
+            prepararVistaGuardar();
         }
 
-        if (e.getSource() == vista.btnModificar) {
-            modificarCliente();
+        if (e.getSource() == vista.mniModificar) {
+            prepararVistaModificar();
         }
 
-        if (e.getSource() == vista.btnEliminar) {
-            eliminarCliente();
+        if (e.getSource() == vista.mniEliminar) {
+            prepararVistaEliminar();
+        }
+
+        if (e.getSource() == vista.btnAccion) {
+            switch (accionActual) {
+                case "GUARDAR":
+                    guardarCliente();
+                    break;
+                case "MODIFICAR":
+                    modificarCliente();
+                    break;
+                case "ELIMINAR":
+                    eliminarCliente();
+                    break;
+                default:
+                    System.out.println("Seleccione una opción del menú.");
+            }
         }
 
         if (e.getSource() == vista.btnLimpiar) {
             limpiarCampos();
         }
     }
+
+    private void prepararVistaGuardar() {
+        accionActual = "GUARDAR";
+        vista.btnAccion.setText("Guardar");
+        vista.btnAccion.setVisible(true);
+
+        setVisibilidadCampos(true);
+        limpiarCampos();
+    }
+
+    private void prepararVistaModificar(){
+        accionActual = "MODIFICAR";
+        vista.btnAccion.setText("Modificar");
+        vista.btnAccion.setVisible(true);
+
+        setVisibilidadCampos(true);
+        limpiarCampos();
+    }
+
+    private void prepararVistaEliminar(){
+        accionActual = "Eliminar";
+        vista.btnAccion.setText("Eliminar");
+        vista.btnAccion.setVisible(true);
+
+        setVisibilidadCampos(false);
+        vista.lblId.setVisible(true);
+        vista.txtIdCliente.setVisible(true);
+        limpiarCampos();
+    }
+
+    private void setVisibilidadCampos(boolean visible) {
+        vista.lblId.setVisible(true);
+        vista.txtIdCliente.setVisible(true);
+
+        vista.lblNombre.setVisible(visible);
+        vista.txtNombre.setVisible(visible);
+        vista.lblApellido.setVisible(visible);
+        vista.txtApellido.setVisible(visible);
+        vista.lblEmail.setVisible(visible);
+        vista.txtEmail.setVisible(visible);
+        vista.lblGenero.setVisible(visible);
+        vista.cmbGenero.setVisible(visible);
+    }
+
 
     private List<ModCliente>  leerListaClientes() {
         Gson gson = new Gson();
@@ -56,6 +120,7 @@ public class CtrCliente implements ActionListener{
             try (Reader reader = new FileReader(f)) {
                 Type listType = new TypeToken<ArrayList<ModCliente>>(){}.getType();
                 lista = gson.fromJson(reader, listType);
+                if (lista == null) lista = new ArrayList<>();
             } catch (Exception e) {
                 System.out.println("Error de lectura: " + e.getMessage());
             }
@@ -88,8 +153,6 @@ public class CtrCliente implements ActionListener{
         cliente.setNombre(vista.txtNombre.getText());
         cliente.setApellido(vista.txtApellido.getText());
         cliente.setEmail(vista.txtEmail.getText());
-        cliente.setGenero(vista.cmbGenero.getSelectedItem().toString());
-
         if (vista.cmbGenero.getSelectedItem() != null) {
             cliente.setGenero(vista.cmbGenero.getSelectedItem().toString());
         }

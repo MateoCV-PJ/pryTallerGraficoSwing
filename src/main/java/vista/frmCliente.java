@@ -4,8 +4,12 @@ import javax.swing.*;
 
 public class frmCliente extends JFrame {
     public JTextField txtIdCliente, txtNombre, txtApellido, txtEmail;
-    public JComboBox cmbGenero;
-    public JButton btnGuardar, btnModificar, btnEliminar, btnLimpiar;
+    public JComboBox<String> cmbGenero;
+    public JButton btnAccion, btnLimpiar;
+
+    public JLabel lblId, lblNombre, lblApellido, lblEmail, lblGenero;
+
+    public JMenuItem mniGuardar, mniModificar, mniEliminar;
 
     public frmCliente() {
 
@@ -14,6 +18,17 @@ public class frmCliente extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menuOpciones = new JMenu("Opciones");
+
+        mniGuardar = new JMenuItem("Guardar");
+        mniModificar = new JMenuItem("Modificar");
+        mniEliminar = new JMenuItem("Eliminar");
+
+        menuOpciones.add(mniGuardar);
+        menuOpciones.add(mniModificar);
+        menuOpciones.add(mniEliminar);
 
         JLabel lblId = new JLabel("ID Cliente:");
         lblId.setBounds(20, 20, 100, 25);
@@ -50,20 +65,12 @@ public class frmCliente extends JFrame {
         cmbGenero.setBounds(130, 180, 200, 25);
         add(cmbGenero);
 
-        btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(20, 230, 80, 25);
-        add(btnGuardar);
+        btnAccion = new JButton("Acción");
+        btnAccion.setBounds(200, 230, 100, 25);
+        add(btnAccion);
 
-        btnModificar = new JButton("Modificar");
-        btnModificar.setBounds(110, 230, 90, 25);
-        add(btnModificar);
-
-        btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBounds(210, 230, 80, 25);
-
-        add(btnEliminar);
         btnLimpiar = new JButton("Limpiar");
-        btnLimpiar.setBounds(300, 230, 80, 25);
+        btnLimpiar.setBounds(200, 230, 100, 25);
         add(btnLimpiar);
     }
 }

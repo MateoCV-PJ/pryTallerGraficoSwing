@@ -17,33 +17,81 @@ import java.util.List;
 public class CtrUsuario implements ActionListener{
     private frmUsuario vista;
     private final String ARCHIVO = "usuarios.json";
+    private String accionActual = "NINGUNA";
 
     public CtrUsuario (frmUsuario vista) {
         this.vista = vista;
 
-        this.vista.btnGuardar.addActionListener(this);
-        this.vista.btnModificar.addActionListener(this);
-        this.vista.btnEliminar.addActionListener(this);
+        this.vista.mniGuardar.addActionListener(this);
+        this.vista.mniModificar.addActionListener(this);
+        this.vista.mniEliminar.addActionListener(this);
+
+        this.vista.btnAccion.addActionListener(this);
         this.vista.btnLimpiar.addActionListener(this);
+
+        prepararVistaGuardar();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == vista.btnGuardar) {
-            guardarUsuario();
+        if (e.getSource() == vista.mniGuardar) {
+            prepararVistaGuardar();
         }
 
-        if (e.getSource() == vista.btnModificar) {
-            modificarUsuario();
+        if (e.getSource() == vista.mniModificar) {
+            prepararVistaModificar();
         }
 
-        if (e.getSource() == vista.btnEliminar) {
-            eliminarUsuario();
+        if (e.getSource() == vista.mniEliminar) {
+            prepararVistaEliminar();
+        }
+
+        if (e.getSource() == vista.btnAccion) {
+            switch (accionActual) {
+                case "GUARDAR": guardarUsuario(); break;
+                case "MODIFICAR": modificarUsuario(); break;
+                case "ELIMINAR": eliminarUsuario(); break;
+            }
         }
 
         if (e.getSource() == vista.btnLimpiar) {
             limpiarCampos();
         }
+    }
+
+    private void prepararVistaGuardar(){
+        accionActual = "GUARDAR";
+        vista.btnAccion.setText("Guardar");
+        setVisibilidadCampos(true);
+        limpiarCampos();
+    }
+
+    private void prepararVistaModificar(){
+        accionActual = "MODIFICAR";
+        vista.btnAccion.setText("Modificar");
+        setVisibilidadCampos(true);
+        limpiarCampos();
+    }
+
+    private void prepararVistaEliminar(){
+        accionActual = "ELIMINAR";
+        vista.btnAccion.setText("Eliminar");
+        setVisibilidadCampos(false);
+        vista.lblId.setVisible(true);
+        vista.txtIdUsuario.setVisible(true);
+        limpiarCampos();
+    }
+
+    private void setVisibilidadCampos(boolean visible) {
+        vista.lblId.setVisible(true);
+        vista.txtIdUsuario.setVisible(true);
+
+        vista.lblNombre.setVisible(visible);
+        vista.txtNombre.setVisible(visible);
+        vista.lblApellido.setVisible(visible);
+        vista.txtApellido.setVisible(visible);
+        vista.lblClave.setVisible(visible);
+        vista.txtClave.setVisible(visible);
     }
 
     private List<ModUsuario> leerListaUsuarios() {

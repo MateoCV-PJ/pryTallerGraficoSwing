@@ -31,6 +31,11 @@ public class CtrPrincipal implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 
+    }
+
+
+    @Override
+    public void mousePressed(MouseEvent e) {
         //Abrir formulario Usuario
         if (e.getSource() == vista.menuUsuario) {
             frmUsuario frmU = new frmUsuario();
@@ -49,13 +54,6 @@ public class CtrPrincipal implements MouseListener {
         if (e.getSource() == vista.menuSalir) {
             System.exit(0); //Cierra la aplicacion
         }
-
-
-    }
-
-
-    @Override
-    public void mousePressed(MouseEvent e) {
 
     }
 

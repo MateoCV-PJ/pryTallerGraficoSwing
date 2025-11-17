@@ -6,15 +6,29 @@ public class frmUsuario extends JFrame {
 
     public JTextField txtIdUsuario, txtNombre, txtApellido;
     public JPasswordField txtClave;
-    public JButton btnGuardar, btnModificar, btnEliminar, btnLimpiar;
+    public JButton btnAccion, btnLimpiar;
+
+    public JLabel lblId, lblNombre, lblApellido, lblClave;
+
+    public JMenuItem mniGuardar, mniModificar, mniEliminar;
 
     public frmUsuario() {
-
         setTitle("Formulario Usuario");
         setSize(400, 300);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menuOpciones = new JMenu("Opciones");
+        mniGuardar = new JMenuItem("Guardar");
+        mniModificar = new JMenuItem("Eliminar");
+        mniEliminar = new JMenuItem("Eliminar");
+        menuOpciones.add(mniGuardar);
+        menuOpciones.add(mniModificar);
+        menuOpciones.add(mniEliminar);
+        menuBar.add(menuOpciones);
+        setJMenuBar(menuBar);
 
         JLabel lblId = new JLabel("ID Usuario:");
         lblId.setBounds(20, 20, 100, 25);
@@ -44,17 +58,9 @@ public class frmUsuario extends JFrame {
         txtClave.setBounds(130, 140, 200, 25);
         add(txtClave);
 
-        btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(20, 190, 80, 25);
-        add(btnGuardar);
-
-        btnModificar = new JButton("Modificar");
-        btnModificar.setBounds(110, 190, 90, 25);
-        add(btnModificar);
-
-        btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBounds(210, 190, 80, 25);
-        add(btnEliminar);
+        btnAccion = new JButton("Acción");
+        btnAccion.setBounds(80, 190, 100, 25);
+        add(btnAccion);
 
         btnLimpiar = new JButton("Limpiar");
         btnLimpiar.setBounds(300, 190, 80, 25);
