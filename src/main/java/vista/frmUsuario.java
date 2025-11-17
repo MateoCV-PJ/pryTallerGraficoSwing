@@ -63,7 +63,7 @@ public class frmUsuario extends JFrame {
         add(btnAccion);
 
         btnLimpiar = new JButton("Limpiar");
-        btnLimpiar.setBounds(300, 190, 80, 25);
+        btnLimpiar.setBounds(200, 190, 80, 25);
         add(btnLimpiar);
     }
 }
