@@ -30,35 +30,35 @@ public class frmCliente extends JFrame {
         menuOpciones.add(mniModificar);
         menuOpciones.add(mniEliminar);
 
-        JLabel lblId = new JLabel("ID Cliente:");
+        lblId = new JLabel("ID Cliente:");
         lblId.setBounds(20, 20, 100, 25);
         add(lblId);
         txtIdCliente = new JTextField();
         txtIdCliente.setBounds(130, 20, 200, 25);
         add(txtIdCliente);
 
-        JLabel lblNombre = new JLabel("Nombre:");
+        lblNombre = new JLabel("Nombre:");
         lblNombre.setBounds(20, 60, 100, 25);
         add(lblNombre);
         txtNombre = new JTextField();
         txtNombre.setBounds(130, 60, 200, 25);
         add(txtNombre);
 
-        JLabel lblApellido = new JLabel("Apellido:");
+        lblApellido = new JLabel("Apellido:");
         lblApellido.setBounds(20, 100, 100, 25);
         add(lblApellido);
         txtApellido = new JTextField();
         txtApellido.setBounds(130, 100, 200, 25);
         add(txtApellido);
 
-        JLabel lblEmail = new JLabel("Email:");
+        lblEmail = new JLabel("Email:");
         lblEmail.setBounds(20, 140, 100, 25);
         add(lblEmail);
         txtEmail = new JTextField();
         txtEmail.setBounds(130, 140, 200, 25);
         add(txtEmail);
 
-        JLabel lblGenero = new JLabel("Género:");
+        lblGenero = new JLabel("Género:");
         lblGenero.setBounds(20, 180, 100, 25);
         add(lblGenero);
         cmbGenero = new JComboBox<>(new String[] {"Masculino", "Femenino", "Otro"});
@@ -66,7 +66,7 @@ public class frmCliente extends JFrame {
         add(cmbGenero);
 
         btnAccion = new JButton("Acción");
-        btnAccion.setBounds(200, 230, 100, 25);
+        btnAccion.setBounds(80, 230, 100, 25);
         add(btnAccion);
 
         btnLimpiar = new JButton("Limpiar");

@@ -22,7 +22,7 @@ public class frmUsuario extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuOpciones = new JMenu("Opciones");
         mniGuardar = new JMenuItem("Guardar");
-        mniModificar = new JMenuItem("Eliminar");
+        mniModificar = new JMenuItem("Modificar");
         mniEliminar = new JMenuItem("Eliminar");
         menuOpciones.add(mniGuardar);
         menuOpciones.add(mniModificar);
@@ -30,28 +30,28 @@ public class frmUsuario extends JFrame {
         menuBar.add(menuOpciones);
         setJMenuBar(menuBar);
 
-        JLabel lblId = new JLabel("ID Usuario:");
+        lblId = new JLabel("ID Usuario:");
         lblId.setBounds(20, 20, 100, 25);
         add(lblId);
         txtIdUsuario = new JTextField();
         txtIdUsuario.setBounds(130, 20, 200, 25);
         add(txtIdUsuario);
 
-        JLabel lblNombre = new JLabel("Nombre:");
+        lblNombre = new JLabel("Nombre:");
         lblNombre.setBounds(20, 60, 100, 25);
         add(lblNombre);
         txtNombre = new JTextField();
         txtNombre.setBounds(130, 60, 200, 25);
         add(txtNombre);
 
-        JLabel lblApellido = new JLabel("Apellido:");
+        lblApellido = new JLabel("Apellido:");
         lblApellido.setBounds(20, 100, 100, 25);
         add(lblApellido);
         txtApellido = new JTextField();
         txtApellido.setBounds(130, 100, 200, 25);
         add(txtApellido);
 
-        JLabel lblClave = new JLabel("Clave:");
+        lblClave = new JLabel("Clave:");
         lblClave.setBounds(20, 140, 100, 25);
         add(lblClave);
         txtClave = new JPasswordField();
