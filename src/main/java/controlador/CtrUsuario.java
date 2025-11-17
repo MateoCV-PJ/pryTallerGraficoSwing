@@ -3,19 +3,28 @@ package controlador;
 import vista.frmUsuario;
 import modelo.ModUsuario;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class CtrUsuario implements ActionListener{
     private frmUsuario vista;
+    private final String ARCHIVO = "usuarios.json";
 
     public CtrUsuario (frmUsuario vista) {
         this.vista = vista;
 
         this.vista.btnGuardar.addActionListener(this);
-        // (Aquí puedes añadir listeners para Modificar, Eliminar, Limpiar)
+        this.vista.btnModificar.addActionListener(this);
+        this.vista.btnEliminar.addActionListener(this);
+        this.vista.btnLimpiar.addActionListener(this);
     }
 
     @Override
@@ -24,10 +33,57 @@ public class CtrUsuario implements ActionListener{
             guardarUsuario();
         }
 
-        //las funciones del resto de botones
+        if (e.getSource() == vista.btnModificar) {
+            modificarUsuario();
+        }
+
+        if (e.getSource() == vista.btnEliminar) {
+            eliminarUsuario();
+        }
+
+        if (e.getSource() == vista.btnLimpiar) {
+            limpiarCampos();
+        }
+    }
+
+    private List<ModUsuario> leerListaUsuarios() {
+        Gson gson = new Gson();
+        List<ModUsuario> lista = new ArrayList<>();
+        File f = new File(ARCHIVO);
+
+        if (f.exists()){
+            try (Reader reader = new FileReader(f)) {
+                Type listType = new TypeToken<ArrayList<ModUsuario>>(){}.getType();
+                lista = gson.fromJson(reader, listType);
+
+                //Archivo vacio o mal formado (null), devuelve lista nueva
+                if (lista == null) lista = new ArrayList<>();
+            } catch (Exception e) {
+                System.out.println("Error leyendo el archivo  o formato incompatible: " + e.getMessage());
+            }
+        }
+        return lista;
+    }
+
+    private void guardarListaUsuarios(List<ModUsuario> lista) {
+        //setPrettyPrinting() da formato al JSON
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter(ARCHIVO)){
+            gson.toJson(lista, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void limpiarCampos(){
+        vista.txtIdUsuario.setText("");
+        vista.txtNombre.setText("");
+        vista.txtApellido.setText("");
+        vista.txtClave.setText("");
     }
 
     private void guardarUsuario() {
+        List<ModUsuario> listaUsuarios = leerListaUsuarios();
         ModUsuario usuario = new ModUsuario();
 
         usuario.setIdUsuario(vista.txtIdUsuario.getText());
@@ -35,18 +91,55 @@ public class CtrUsuario implements ActionListener{
         usuario.setApellido(vista.txtApellido.getText());
         usuario.setClave(new String(vista.txtClave.getPassword()));
 
-        Gson gson = new Gson();
-        String json = gson.toJson(usuario);
+        listaUsuarios.add(usuario);
+        guardarListaUsuarios(listaUsuarios);
 
-        try (FileWriter writer = new FileWriter("usuarios.json", true)){
-            writer.write(json + "\n");
-            System.out.println("Usuario guardado en usuarios.json");
+        System.out.println("Usuario guardado correctamente.");
+        limpiarCampos();
+    }
 
-            //limpiar formulario
+    private void modificarUsuario() {
+        String idBuscado = vista.txtIdUsuario.getText();
+        List<ModUsuario> listaUsuarios = leerListaUsuarios();
+        boolean encontrado = false;
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (ModUsuario usuario : listaUsuarios) {
+            if (usuario.getIdUsuario().equals(idBuscado)) {
+                usuario.setNombre(vista.txtNombre.getText());
+                usuario.setApellido(vista.txtApellido.getText());
+                usuario.setClave(new String(vista.txtClave.getPassword()));
+                encontrado = true;
+                break;
+            }
         }
+
+        if (encontrado) {
+            guardarListaUsuarios(listaUsuarios);
+            System.out.println("Usuario modificado.");
+            limpiarCampos();
+        } else {
+            System.out.println("Id no encontrado");
+        }
+
+    }
+
+    private void eliminarUsuario() {
+        String idBuscado = vista.txtIdUsuario.getText();
+        List<ModUsuario> listaUsuarios = leerListaUsuarios();
+
+        boolean eliminado = listaUsuarios
+                .removeIf(usuario -> usuario.getIdUsuario().equals(idBuscado));
+
+        if (eliminado) {
+            guardarListaUsuarios(listaUsuarios);
+            System.out.println("Usuario eliminado.");
+            limpiarCampos();
+        } else {
+            System.out.println("ID no encontrado.");
+        }
+
+
+
     }
 }
 
